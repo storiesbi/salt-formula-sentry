@@ -22,19 +22,7 @@ SENTRY_CACHE = 'sentry.cache.redis.RedisCache'
 
 CELERY_ALWAYS_EAGER = False
 
-SECRET_KEY = '{{ server.secret_key }}'
-
-# You should configure the absolute URI to server. It will attempt to guess it if you don't
-# but proxies may interfere with this.
-{%- if server.bind.name is defined %}
-SENTRY_URL_PREFIX = 'http://{{ server.bind.name }}'
-{%- else %}
-{%- if pillar.nginx.proxy is defined %}
-SENTRY_URL_PREFIX = 'http://{{ server.bind.name }}'
-{%- else %}
-SENTRY_URL_PREFIX = 'http://{{ server.bind.url }}:{{ server.bind.port }}'
-{%- endif %}
-{%- endif %}
+SENTRY_OPTIONS['system.secret-key'] = '{{ server.secret_key }}'
 
 ALLOWED_HOSTS = [
     '*',
@@ -74,11 +62,24 @@ EMAIL_USE_SSL = False
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 {%- endif %}
-EMAIL_HOST = "{{ server.mail.get('host', 'localhost') }}"
-EMAIL_HOST_USER = "{{ server.mail.user }}"
-EMAIL_HOST_PASSWORD = "{{ server.mail.password }}"
-EMAIL_PORT = {{ server.mail.get('port', '25') }}
 
+SENTRY_OPTIONS['mail.backend'] = 'django.core.mail.backends.smtp.EmailBackend'
+SENTRY_OPTIONS['mail.host'] = "{{ server.mail.get('host', 'localhost') }}"
+SENTRY_OPTIONS['mail.password'] = "{{ server.mail.password }}"
+SENTRY_OPTIONS['mail.username'] = "{{ server.mail.user }}"
+SENTRY_OPTIONS['mail.port'] = {{ server.mail.get('port', '25') }}
+
+# You should configure the absolute URI to server. It will attempt to guess it if you don't
+# but proxies may interfere with this.
+{%- if server.bind.name is defined %}
+SENTRY_OPTIONS['system.url-prefix'] = 'http://{{ server.bind.name }}'
+{%- else %}
+{%- if pillar.nginx.proxy is defined %}
+SENTRY_OPTIONS['system.url-prefix'] = 'http://{{ server.bind.name }}'
+{%- else %}
+SENTRY_OPTIONS['system.url-prefix'] = 'http://{{ server.bind.url }}:{{ server.bind.port }}'
+{%- endif %}
+{%- endif %}
 
 # http://twitter.com/apps/new
 # It's important that input a callback URL, even if its useless. We have no idea why, consult Twitter.

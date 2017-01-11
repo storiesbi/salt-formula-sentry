@@ -1,0 +1,29 @@
+
+{%- load_yaml as base_defaults %}
+Debian:
+  pkgs:
+  - python-setuptools
+  - python-memcache
+  - python-psycopg2
+  - python-imaging
+  - python-docutils
+  - python-simplejson
+  - build-essential
+  - gettext
+  - libxml2-dev
+  - libxslt1-dev
+  - libffi-dev
+  - clang
+  - libssl-dev
+  - gcc
+  - libjpeg-dev
+  - libxslt-dev
+  - libyaml-dev
+  - libpq-dev
+  dir:
+    base: /srv/stories
+    home: /var/lib/stories
+    workspace: /srv/stories
+{%- endload %}
+
+{%- set server = salt['grains.filter_by'](base_defaults, merge=salt['pillar.get']('sentry:server')) %}

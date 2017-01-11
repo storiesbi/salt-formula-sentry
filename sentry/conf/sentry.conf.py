@@ -107,3 +107,9 @@ SENTRY_DIGESTS_OPTIONS = {
     'capacity': 100,
     'cluster': 'digests',
 }
+
+SENTRY_TSDB = 'sentry.tsdb.redis.RedisTSDB'
+
+SENTRY_TSDB_OPTIONS = {
+    'cluster': 'tsdb',
+}

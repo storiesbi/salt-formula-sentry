@@ -2,6 +2,8 @@
 
 import os.path
 
+SENTRY_OPTIONS = {}
+
 CONF_ROOT = os.path.dirname(__file__)
 
 DATABASES = {

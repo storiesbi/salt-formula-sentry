@@ -104,12 +104,7 @@ TRELLO_API_SECRET = ''
 
 SENTRY_DIGESTS = 'sentry.digests.backends.redis.RedisBackend'
 SENTRY_DIGESTS_OPTIONS = {
-    'capacity': 100,
-    'cluster': 'digests',
+    'capacity': 100
 }
 
 SENTRY_TSDB = 'sentry.tsdb.redis.RedisTSDB'
-
-SENTRY_TSDB_OPTIONS = {
-    'cluster': 'tsdb',
-}

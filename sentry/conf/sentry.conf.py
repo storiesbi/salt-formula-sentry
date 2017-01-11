@@ -57,7 +57,6 @@ CSRF_COOKIE_SECURE = True
 
 {%- if server.broker is defined and server.broker.engine == 'redis' %}
 BROKER_URL = 'redis://{{ server.broker.host }}:{{ server.broker.port }}/{{ server.broker.number }}'
-CELERY_DEFAULT_QUEUE = "{{ app_name }}"
 {%- elif  server.broker is defined and server.broker.engine == 'amqp' %}
 BROKER_URL = 'amqp://{{ server.broker.user }}:{{ server.broker.password }}@{{ server.broker.host }}:{{ server.broker.get("port",5672) }}/{{ server.broker.virtual_host }}'
 {%- endif %}

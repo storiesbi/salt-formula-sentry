@@ -101,3 +101,9 @@ GITHUB_API_SECRET = ''
 # https://trello.com/1/appKey/generate
 TRELLO_API_KEY = ''
 TRELLO_API_SECRET = ''
+
+SENTRY_DIGESTS = 'sentry.digests.backends.redis.RedisBackend'
+SENTRY_DIGESTS_OPTIONS = {
+    'capacity': 100,
+    'cluster': 'digests',
+}

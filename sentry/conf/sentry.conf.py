@@ -55,12 +55,10 @@ BROKER_URL = 'amqp://{{ server.broker.user }}:{{ server.broker.password }}@{{ se
 #  https://docs.djangoproject.com/en/1.3/topics/email/?from=olddocs#e-mail-backends
 
 {%- if server.mail.get('encryption', 'none') == 'tls' %}
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+SENTRY_OPTIONS['mail.use-tls'] = True
 {%- endif %}
 {%- if server.mail.get('encryption', 'none') == 'ssl' %}
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
+SENTRY_OPTIONS['mail.use-ssl'] = True
 {%- endif %}
 
 SENTRY_OPTIONS['mail.backend'] = 'django.core.mail.backends.smtp.EmailBackend'

@@ -32,13 +32,11 @@ ALLOWED_HOSTS = [
 
 SENTRY_REMOTE_TIMEOUT = 10
 
-SENTRY_REMOTE_URL = 'http://{{ server.bind.name }}/sentry/store/'
-
 SENTRY_WEB_HOST = '{{ server.bind.address }}'
 SENTRY_WEB_PORT = {{ server.bind.port }}
 SENTRY_WEB_OPTIONS = {
     'workers': {{ server.get('workers', '3') }},  # the number of gunicorn workers
-#    'secure_scheme_headers': {'X-FORWARDED-PROTO': 'https'},  # detect HTTPS mode from X-Forwarded-Proto header
+    'secure_scheme_headers': {'X-FORWARDED-PROTO': 'https'},  # detect HTTPS mode from X-Forwarded-Proto header
 }
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SESSION_COOKIE_SECURE = True
@@ -70,12 +68,12 @@ SENTRY_OPTIONS['mail.port'] = {{ server.mail.get('port', '25') }}
 # You should configure the absolute URI to server. It will attempt to guess it if you don't
 # but proxies may interfere with this.
 {%- if server.bind.name is defined %}
-SENTRY_OPTIONS['system.url-prefix'] = 'http://{{ server.bind.name }}'
+SENTRY_OPTIONS['system.url-prefix'] = '{{ server.bind.get("protocol", "http") }}://{{ server.bind.name }}'
 {%- else %}
 {%- if pillar.nginx.proxy is defined %}
-SENTRY_OPTIONS['system.url-prefix'] = 'http://{{ server.bind.name }}'
+SENTRY_OPTIONS['system.url-prefix'] = '{{ server.bind.get("protocol", "http") }}://{{ server.bind.name }}'
 {%- else %}
-SENTRY_OPTIONS['system.url-prefix'] = 'http://{{ server.bind.url }}:{{ server.bind.port }}'
+SENTRY_OPTIONS['system.url-prefix'] = '{{ server.bind.get("protocol", "http") }}://{{ server.bind.url }}:{{ server.bind.port }}'
 {%- endif %}
 {%- endif %}
 

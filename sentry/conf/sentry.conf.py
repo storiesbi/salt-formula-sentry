@@ -3,6 +3,7 @@
 import os.path
 
 SENTRY_OPTIONS = {}
+SENTRY_FEATURES = {}
 
 CONF_ROOT = os.path.dirname(__file__)
 
@@ -25,6 +26,7 @@ SENTRY_CACHE = 'sentry.cache.redis.RedisCache'
 CELERY_ALWAYS_EAGER = False
 
 SENTRY_OPTIONS['system.secret-key'] = '{{ server.secret_key }}'
+SENTRY_FEATURES['auth:register'] = False
 
 ALLOWED_HOSTS = [
     '*',

@@ -10,6 +10,8 @@ It’s important to note that Sentry should not be thought of as a log stream, b
 Sample pillar
 =============
 
+.. code-block:: yaml
+
     sentry:
       server:
         enabled: true
@@ -36,6 +38,8 @@ Sample pillar
 
 Sample pillar with proxy
 ========================
+
+.. code-block:: yaml
 
     sentry:
       server:
